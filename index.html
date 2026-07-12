@@ -539,6 +539,7 @@ class Component extends DCLogic {
   }
   componentDidMount(){
     try{ this.setState({cookie: localStorage.getItem('reverso_cookie')==='1'}); }catch(e){}
+    if(this.state.view==='loading') this.startLoadTimer(); // resume if reloaded mid-loading
     try{
       this._mq=window.matchMedia('(max-width: 760px)');
       this.setState({mobile:this._mq.matches});
@@ -594,13 +595,17 @@ class Component extends DCLogic {
     const u=this.state.user.trim().toLowerCase(), p=this.state.pass.trim();
     if(!((u==='jornalismo'||u==='uemg')&&p==='2026')){ this.setState({err:'Usuário ou senha inválidos. Tente jornalismo · 2026.'}); return; }
     this.setState({view:'loading',loadPct:0});
+    this.startLoadTimer();
+  };
+  startLoadTimer(){
+    if(this._li) clearInterval(this._li);
     this._li=setInterval(()=>{
       this.setState(s=>{ const n=Math.min(100,s.loadPct+(5+Math.random()*9));
         if(n>=100){ clearInterval(this._li); setTimeout(()=>this.setState({view:'platform'}),450); }
         return {loadPct:Math.round(n)};
       });
     },140);
-  };
+  }
 
   /* ---------- platform ---------- */
   setCat=c=>()=>this.setState({cat:c});
@@ -796,7 +801,10 @@ class Component extends DCLogic {
       maxHeight:'calc('+stageH+' + 28px)',
       transform:'rotate(var(--flip))', transition:'transform 1.15s cubic-bezier(.76,0,.24,1)' };
     const spreadStyle={width:'100%',height:'100%',display:'flex',boxShadow:'0 30px 70px rgba(0,0,0,.35)',borderRadius:'4px',background:'#0a0a0a',overflow:'hidden'};
-    const spreadPages = curSpread.map((p,i)=>{
+    // When the magazine is flipped (kids side), the 180° rotation swaps visual left/right,
+    // so mirror the DOM order of the pair to keep the reading order correct.
+    const orderedSpread = (flipped && !oneUp) ? [...curSpread].reverse() : curSpread;
+    const spreadPages = orderedSpread.map((p,i)=>{
       const posLeft = !oneUp && i===0;
       const spine = oneUp ? {display:'none'}
         : (posLeft
