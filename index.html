@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Archivo:wght@400;500;600;700;800&family=Fredoka:wght@400;500;600;700&family=Baloo+2:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  #root{font-family:'Archivo',system-ui,sans-serif}
+  @keyframes rvspin{to{transform:rotate(360deg)}}
+  @keyframes rvfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+  @keyframes rvpulse{0%,100%{opacity:.35}50%{opacity:1}}
+  @keyframes rvpop{0%{transform:scale(.92);opacity:0}100%{transform:scale(1);opacity:1}}
+  @keyframes rvrise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes turnOutNext{0%{transform:perspective(2400px) rotateY(0) skewY(0);opacity:1}100%{transform:perspective(2400px) rotateY(-92deg) skewY(4deg);opacity:.5}}
+  @keyframes turnInNext{0%{transform:perspective(2400px) rotateY(80deg) skewY(-4deg);opacity:.3}45%{transform:perspective(2400px) rotateY(-12deg) skewY(2.5deg);opacity:1}72%{transform:perspective(2400px) rotateY(5deg) skewY(-1.2deg)}100%{transform:perspective(2400px) rotateY(0) skewY(0);opacity:1}}
+  @keyframes turnOutPrev{0%{transform:perspective(2400px) rotateY(0) skewY(0);opacity:1}100%{transform:perspective(2400px) rotateY(92deg) skewY(-4deg);opacity:.5}}
+  @keyframes turnInPrev{0%{transform:perspective(2400px) rotateY(-80deg) skewY(4deg);opacity:.3}45%{transform:perspective(2400px) rotateY(12deg) skewY(-2.5deg);opacity:1}72%{transform:perspective(2400px) rotateY(-5deg) skewY(1.2deg)}100%{transform:perspective(2400px) rotateY(0) skewY(0);opacity:1}}
+  @keyframes sheenSweep{0%{opacity:0;transform:translateX(-40%)}25%{opacity:.8}100%{opacity:0;transform:translateX(240%)}}
+  @keyframes flipOut{0%{transform:perspective(2600px) rotateY(0);opacity:1}100%{transform:perspective(2600px) rotateY(90deg);opacity:.15}}
+  @keyframes flipIn{0%{transform:perspective(2600px) rotateY(-90deg);opacity:.15}60%{transform:perspective(2600px) rotateY(8deg);opacity:1}100%{transform:perspective(2600px) rotateY(0);opacity:1}}
+  @keyframes spineShade{0%{opacity:.85}100%{opacity:0}}
+  @keyframes toastin{from{opacity:0;transform:translate(-50%,14px)}to{opacity:1;transform:translate(-50%,0)}}
+  @keyframes twinkle{0%,100%{opacity:.25}50%{opacity:1}}
+  ::-webkit-scrollbar{width:11px;height:11px}
+  ::-webkit-scrollbar-thumb{background:rgba(120,132,140,.42);border-radius:20px}
+  ::-webkit-scrollbar-track{background:transparent}
+</style>
+</helmet>
+
+<sc-if value="{{ isLogin }}" hint-placeholder-val="{{ true }}">
+<div style="{{ loginGrid }}">
+  <div style="{{ loginHero }}">
+    <div style="position:absolute;inset:0;background-image:radial-gradient(1.4px 1.4px at 20% 30%,#fff,transparent),radial-gradient(1.4px 1.4px at 70% 50%,#fff,transparent),radial-gradient(1px 1px at 40% 80%,#fff,transparent),radial-gradient(1.2px 1.2px at 85% 20%,#fff,transparent),radial-gradient(1px 1px at 55% 15%,#fff,transparent);opacity:.5"></div>
+    <div style="position:relative;display:flex;align-items:center;gap:14px">
+      <div style="width:46px;height:46px;border-radius:12px;background:#e9e2d4;color:#0c1420;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px;display:grid;place-items:center;letter-spacing:-.02em">RЯ</div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:20px;letter-spacing:.04em;font-weight:600">REVEЯSO</div>
+    </div>
+    <div style="position:relative;max-width:470px">
+      <div style="font-family:'Archivo';text-transform:uppercase;letter-spacing:.32em;font-size:12px;color:#8fb3c8;margin-bottom:20px">Plataforma de Leitura Digital</div>
+      <h1 style="font-family:'Spectral',serif;font-weight:500;font-size:46px;line-height:1.08;margin:0 0 20px">Duas formas de olhar. Um só universo.</h1>
+      <p style="font-size:16px;line-height:1.7;color:#b7c6d6;margin:0">A revista científica que se lê dos dois lados. De um lado, ciência para adultos; vire a revista e descubra a ciência para crianças. Tudo em uma experiência de leitura digital.</p>
+    </div>
+    <div style="position:relative;display:flex;gap:22px;font-size:13px;color:#7f9bb0">
+      <a href="#" onClick="{{ openPriv }}" style="color:#7f9bb0;text-decoration:none">Política de Privacidade</a>
+      <a href="#" onClick="{{ openTerms }}" style="color:#7f9bb0;text-decoration:none">Termos de Uso</a>
+      <span>© Revista Reverso · UEMG Jornalismo</span>
+    </div>
+  </div>
+
+  <div style="background:#f5f2ec;color:#16272d;display:flex;align-items:center;justify-content:center;padding:40px">
+    <div style="width:100%;max-width:380px;animation:rvrise .6s ease both">
+      <h2 style="font-family:'Spectral',serif;font-weight:600;font-size:30px;margin:0 0 6px">Entrar</h2>
+      <p style="color:#5f7076;font-size:14px;margin:0 0 28px">Acesse sua biblioteca pessoal.</p>
+      <label style="display:block;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#5f7076;margin-bottom:8px">Usuário</label>
+      <input value="{{ user }}" onChange="{{ onUser }}" onKeyDown="{{ onKey }}" placeholder="jornalismo" style="width:100%;padding:14px 16px;border:1px solid #d8d1c4;border-radius:12px;font-size:15px;background:#fff;color:#16272d;margin-bottom:18px;outline:none;font-family:'Archivo'" />
+      <label style="display:block;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#5f7076;margin-bottom:8px">Senha</label>
+      <input value="{{ pass }}" onChange="{{ onPass }}" onKeyDown="{{ onKey }}" type="password" placeholder="••••" style="width:100%;padding:14px 16px;border:1px solid #d8d1c4;border-radius:12px;font-size:15px;background:#fff;color:#16272d;margin-bottom:10px;outline:none;font-family:'Archivo'" />
+      <sc-if value="{{ err }}" hint-placeholder-val="">
+        <div style="color:#b23b2e;font-size:13px;margin-bottom:12px">{{ err }}</div>
+      </sc-if>
+      <button onClick="{{ doLogin }}" style="width:100%;margin-top:12px;padding:15px;border:none;border-radius:12px;background:#12324f;color:#f3efe6;font-size:15px;font-weight:600;cursor:pointer;font-family:'Archivo';letter-spacing:.02em" style-hover="background:#0d2740">Entrar na plataforma</button>
+      <sc-if value="{{ showHint }}" hint-placeholder-val="{{ true }}">
+        <div style="margin-top:22px;padding:14px 16px;background:#ece7dd;border:1px dashed #cbc3b3;border-radius:12px;font-size:12.5px;color:#5f7076;line-height:1.7">
+          <b style="color:#16272d">Acessos de demonstração</b><br>
+          jornalismo · 2026 &nbsp;•&nbsp; UEMG · 2026
+        </div>
+      </sc-if>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isLoading }}" hint-placeholder-val="">
+<div style="min-height:100vh;background:radial-gradient(130% 130% at 50% 15%, #1a2b47 0%, #0a0f1a 70%);color:#eef3f2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:36px;position:relative;overflow:hidden">
+  <div style="position:absolute;inset:0;background-image:radial-gradient(1.4px 1.4px at 20% 30%,#fff,transparent),radial-gradient(1.4px 1.4px at 70% 60%,#fff,transparent),radial-gradient(1px 1px at 40% 80%,#fff,transparent),radial-gradient(1.2px 1.2px at 85% 25%,#fff,transparent),radial-gradient(1px 1px at 55% 12%,#fff,transparent),radial-gradient(1px 1px at 10% 65%,#fff,transparent);opacity:.55"></div>
+  <div style="position:relative;display:flex;align-items:center;gap:16px;animation:rvfloat 3s ease-in-out infinite">
+    <div style="width:60px;height:60px;border-radius:16px;background:#e9e2d4;color:#0a0f1a;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:30px;display:grid;place-items:center">RЯ</div>
+    <div style="font-family:'Space Grotesk',sans-serif;font-size:28px;letter-spacing:.04em;font-weight:600">REVEЯSO</div>
+  </div>
+  <div style="position:relative;width:320px">
+    <div style="height:6px;background:rgba(233,226,212,.15);border-radius:20px;overflow:hidden">
+      <div style="{{ loadStyle }}"></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-top:14px;font-size:13px;color:#9fbcd0;letter-spacing:.04em">
+      <span>Carregando Biblioteca…</span><span>{{ loadPct }}%</span>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isPlatform }}" hint-placeholder-val="">
+<div style="{{ platVars }}">
+<div style="min-height:100vh;background:var(--p-bg);color:var(--p-ink);font-family:'Archivo',sans-serif">
+
+  <header style="position:sticky;top:0;z-index:40;background:var(--p-panel);border-bottom:1px solid var(--p-border);backdrop-filter:blur(8px)">
+    <div style="display:flex;align-items:center;gap:18px;padding:12px 22px">
+      <div style="display:flex;align-items:center;gap:11px;flex-shrink:0">
+        <div style="width:34px;height:34px;border-radius:9px;background:var(--p-acc);color:#fff;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;display:grid;place-items:center">RЯ</div>
+        <span style="font-family:'Space Grotesk',sans-serif;font-size:17px;color:var(--p-ink);font-weight:600;letter-spacing:.03em">{{ platformName }}</span>
+      </div>
+      <nav style="flex:1;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding:2px">
+        <sc-for list="{{ cats }}" as="c" hint-placeholder-count="5">
+          <button onClick="{{ c.go }}" style="{{ c.style }}" style-hover="color:var(--p-ink)">{{ c.name }}</button>
+        </sc-for>
+      </nav>
+      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+        <button onClick="{{ toast_search }}" title="Pesquisar" style="width:38px;height:38px;border:none;border-radius:10px;background:transparent;color:var(--p-mut);cursor:pointer;font-size:17px" style-hover="background:var(--p-hover)">⌕</button>
+        <button onClick="{{ toggleDark }}" title="Tema" style="width:38px;height:38px;border:none;border-radius:10px;background:transparent;color:var(--p-mut);cursor:pointer;font-size:16px" style-hover="background:var(--p-hover)">{{ darkIcon }}</button>
+        <button onClick="{{ openPriv }}" title="Privacidade / LGPD" style="width:38px;height:38px;border:none;border-radius:10px;background:transparent;color:var(--p-mut);cursor:pointer;font-size:16px" style-hover="background:var(--p-hover)">⚙</button>
+        <div style="width:38px;height:38px;border-radius:50%;background:var(--p-acc);color:#fff;display:grid;place-items:center;font-weight:700;font-size:14px;margin-left:4px">{{ userInitial }}</div>
+      </div>
+    </div>
+  </header>
+
+  <div style="{{ platGrid }}">
+    <aside style="{{ asideStyle }}">
+      <div style="font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--p-mut);padding:0 12px;margin-bottom:12px">Biblioteca</div>
+      <sc-for list="{{ side }}" as="s" hint-placeholder-count="6">
+        <button onClick="{{ s.go }}" style="{{ s.style }}" style-hover="background:var(--p-hover);color:var(--p-ink)">
+          <span style="width:18px;display:inline-block;text-align:center;opacity:.85">{{ s.icon }}</span>{{ s.name }}
+        </button>
+      </sc-for>
+      <div style="margin-top:26px;padding:16px;border-radius:14px;background:linear-gradient(150deg,#1a2b47,#0a0f1a);color:#eaf1f8">
+        <div style="font-family:'Spectral',serif;font-size:16px;margin-bottom:6px">Uma revista, duas leituras</div>
+        <div style="font-size:12.5px;line-height:1.6;opacity:.85">Comece por qualquer lado. Quando chegar ao centro, vire a revista e descubra uma nova narrativa.</div>
+      </div>
+    </aside>
+
+    <main style="{{ mainStyle }}">
+      <!-- HOME -->
+      <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+        <div style="animation:rvrise .5s ease both">
+          <div style="{{ heroGrid }}">
+            <div style="position:absolute;inset:0;background-image:radial-gradient(1.4px 1.4px at 15% 30%,#fff,transparent),radial-gradient(1.3px 1.3px at 65% 55%,#fff,transparent),radial-gradient(1px 1px at 40% 78%,#fff,transparent),radial-gradient(1.2px 1.2px at 88% 22%,#fff,transparent);opacity:.5"></div>
+            <div style="position:relative;display:flex;flex-direction:column;justify-content:center">
+              <div style="font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#f0c65a">Edição atual · Nº 18 · Julho 2026</div>
+              <h1 style="font-family:'Spectral',serif;font-weight:500;font-size:40px;line-height:1.08;margin:12px 0 10px">O Mistério do Cosmonauta Perdido</h1>
+              <p style="font-size:15px;line-height:1.7;color:#c3d0de;max-width:460px;margin:0 0 22px">Duas formas de olhar. Um só universo. Da queima de arquivo da Corrida Espacial aos buracos negros — e o lado infantil que ensina ciência brincando.</p>
+              <div style="display:flex;gap:12px">
+                <button onClick="{{ openMagazine }}" style="padding:14px 26px;border:none;border-radius:12px;background:#f0c65a;color:#20160a;font-size:15px;font-weight:700;cursor:pointer;font-family:'Archivo'" style-hover="filter:brightness(1.06)">Abrir edição</button>
+                <button onClick="{{ goGaleria }}" style="padding:14px 22px;border:1px solid rgba(255,255,255,.25);border-radius:12px;background:transparent;color:#eef3f8;font-weight:600;cursor:pointer;font-family:'Archivo'" style-hover="background:rgba(255,255,255,.08)">Ver galeria</button>
+              </div>
+            </div>
+            <div style="{{ heroCoverWrap }}">
+              <div onClick="{{ openMagazine }}" style="cursor:pointer;width:200px;aspect-ratio:735/1040;border-radius:10px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.5);position:relative;background:#05070d;transform:rotate(3deg);transition:transform .3s" style-hover="transform:rotate(0) scale(1.03)">
+                <img src="assets/pages/pg-01.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" />
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:baseline;justify-content:space-between;margin:38px 0 4px">
+            <h2 style="font-family:'Spectral',serif;font-weight:500;font-size:24px;margin:0;color:var(--p-ink)">Edições anteriores</h2>
+            <button onClick="{{ goAnteriores }}" style="border:none;background:transparent;color:var(--p-acc);font-size:13px;font-weight:600;cursor:pointer;font-family:'Archivo'">Ver todas ›</button>
+          </div>
+          <p style="color:var(--p-mut);font-size:13.5px;margin:6px 0 20px">O acervo completo da Reverso. Edições esgotadas — disponíveis apenas para assinantes institucionais.</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:20px">
+            <sc-for list="{{ prevEds }}" as="e" hint-placeholder-count="5">
+              <div onClick="{{ e.click }}" style="cursor:default">
+                <div style="{{ e.cover }}">
+                  <div style="position:absolute;inset:0;background-image:radial-gradient(1px 1px at 20% 30%,rgba(255,255,255,.7),transparent),radial-gradient(1px 1px at 70% 60%,rgba(255,255,255,.7),transparent),radial-gradient(1px 1px at 45% 80%,rgba(255,255,255,.6),transparent);opacity:.6"></div>
+                  <div style="position:absolute;top:12px;left:0;right:0;text-align:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:rgba(255,255,255,.92);letter-spacing:.05em">REVEЯSO</div>
+                  <div style="position:absolute;left:0;right:0;bottom:38px;text-align:center;padding:0 14px">
+                    <div style="font-family:'Spectral',serif;font-size:16px;color:#fff;line-height:1.15;text-shadow:0 2px 8px rgba(0,0,0,.5)">{{ e.theme }}</div>
+                  </div>
+                  <div style="position:absolute;left:0;right:0;bottom:14px;text-align:center;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.7)">Nº {{ e.num }}</div>
+                  <div style="position:absolute;inset:0;background:rgba(20,26,34,.5);opacity:0;transition:opacity .28s;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px" style-hover="opacity:1">
+                    <div style="font-size:22px">🔒</div>
+                    <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#e7ecef">Edição esgotada</div>
+                  </div>
+                </div>
+                <div style="padding:10px 2px 0">
+                  <div style="font-size:13px;font-weight:600;color:var(--p-ink)">Edição Nº {{ e.num }}</div>
+                  <div style="font-size:11.5px;color:var(--p-mut);margin-top:2px">{{ e.date }} · esgotada</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- EDIÇÕES ANTERIORES -->
+      <sc-if value="{{ isAnteriores }}" hint-placeholder-val="">
+        <div style="animation:rvrise .5s ease both">
+          <div style="font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--p-acc)">Acervo</div>
+          <h1 style="font-family:'Spectral',serif;font-weight:500;font-size:32px;margin:8px 0 6px;color:var(--p-ink)">Edições anteriores</h1>
+          <p style="color:var(--p-mut);font-size:14px;margin:0 0 26px;max-width:640px">Todas as edições esgotadas da Revista Reverso. O conteúdo integral está disponível apenas para assinantes institucionais da UEMG.</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:22px">
+            <sc-for list="{{ prevEds }}" as="e" hint-placeholder-count="5">
+              <div style="cursor:default">
+                <div style="{{ e.cover }}">
+                  <div style="position:absolute;inset:0;background-image:radial-gradient(1px 1px at 20% 30%,rgba(255,255,255,.7),transparent),radial-gradient(1px 1px at 70% 60%,rgba(255,255,255,.7),transparent),radial-gradient(1px 1px at 45% 80%,rgba(255,255,255,.6),transparent);opacity:.6"></div>
+                  <div style="position:absolute;top:14px;left:0;right:0;text-align:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;color:rgba(255,255,255,.92);letter-spacing:.05em">REVEЯSO</div>
+                  <div style="position:absolute;left:0;right:0;bottom:40px;text-align:center;padding:0 14px">
+                    <div style="font-family:'Spectral',serif;font-size:18px;color:#fff;line-height:1.15;text-shadow:0 2px 8px rgba(0,0,0,.5)">{{ e.theme }}</div>
+                  </div>
+                  <div style="position:absolute;left:0;right:0;bottom:16px;text-align:center;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.7)">Nº {{ e.num }} · {{ e.date }}</div>
+                  <div style="position:absolute;top:12px;right:12px;width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.35);display:grid;place-items:center;font-size:12px">🔒</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- GALERIA -->
+      <sc-if value="{{ isGaleria }}" hint-placeholder-val="">
+        <div style="animation:rvrise .5s ease both">
+          <div style="font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--p-acc)">Comunidade</div>
+          <h1 style="font-family:'Spectral',serif;font-weight:500;font-size:32px;margin:8px 0 6px;color:var(--p-ink)">Galeria dos Pequenos Cientistas</h1>
+          <p style="color:var(--p-mut);font-size:14px;margin:0 0 26px;max-width:660px">Desenhos enviados por crianças em edições anteriores, usando a ferramenta de desenho da revista. Toda edição, novas obras entram para o mural.</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:22px">
+            <sc-if value="{{ galleryReady }}" hint-placeholder-val="">
+            <sc-for list="{{ gallery }}" as="g" hint-placeholder-count="0">
+              <figure style="margin:0;background:var(--p-panel);border:1px solid var(--p-border);border-radius:16px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.06);transition:transform .25s" style-hover="transform:translateY(-4px)">
+                <div style="background:#fffdf5;padding:10px">
+                  <div style="{{ g.imgStyle }}"></div>
+                </div>
+                <figcaption style="padding:12px 14px 14px">
+                  <div style="font-size:14px;font-weight:600;color:var(--p-ink)">{{ g.title }}</div>
+                  <div style="font-size:12px;color:var(--p-mut);margin-top:3px">{{ g.author }} · Edição {{ g.ed }}</div>
+                </figcaption>
+              </figure>
+            </sc-for>
+            </sc-if>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- SOBRE -->
+      <sc-if value="{{ isSobre }}" hint-placeholder-val="">
+        <div style="animation:rvrise .5s ease both;max-width:680px">
+          <div style="font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--p-acc)">Sobre</div>
+          <h1 style="font-family:'Spectral',serif;font-weight:500;font-size:32px;margin:8px 0 16px;color:var(--p-ink)">A Revista Reverso</h1>
+          <p style="color:var(--p-ink);font-size:15px;line-height:1.8;margin:0 0 14px">A Reverso é uma revista de divulgação científica produzida na disciplina de Editoração Gráfica, sob orientação da Prof.ª Dr.ª Ana Paula Rodarte, no 5º período do curso de Jornalismo da Universidade do Estado de Minas Gerais (UEMG), em Passos/MG.</p>
+          <p style="color:var(--p-mut);font-size:14.5px;line-height:1.8;margin:0 0 14px">Seu conceito editorial é único: uma revista que se lê dos dois lados. Um lado traz reportagens científicas para o público adulto; ao virar a revista, o leitor encontra a mesma ciência traduzida para crianças, com linguagem lúdica e atividades. As duas leituras se encontram no centro.</p>
+          <div style="margin-top:18px;padding:18px 20px;border-radius:14px;background:var(--p-hover)">
+            <div style="font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--p-acc);margin-bottom:8px">Expediente</div>
+            <div style="font-size:13.5px;color:var(--p-ink);line-height:1.9">Redação, direção de arte e diagramação: Equipe Reverso · Ano 2, Nº 18 · Passos, MG · revista.reverso@email.com</div>
+          </div>
+        </div>
+      </sc-if>
+    </main>
+  </div>
+
+  <!-- PRÉ-CAPA MODAL -->
+  <sc-if value="{{ modalOpen }}" hint-placeholder-val="">
+    <div onClick="{{ closeModal }}" style="position:fixed;inset:0;z-index:60;background:rgba(6,10,18,.72);backdrop-filter:blur(5px);display:grid;place-items:center;padding:26px;overflow:auto">
+      <div onClick="{{ stop }}" style="width:min(1000px,100%);background:var(--p-panel);border-radius:24px;overflow:hidden;animation:rvpop .3s ease both;box-shadow:0 40px 100px rgba(0,0,0,.5)">
+        <div style="padding:30px 34px 6px;text-align:center">
+          <div style="font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--p-acc)">Edição Nº 18 — Revista Reverso</div>
+          <h2 style="font-family:'Spectral',serif;font-weight:500;font-size:30px;margin:12px 0 8px;color:var(--p-ink)">Uma revista, duas leituras.</h2>
+          <p style="color:var(--p-mut);font-size:14.5px;line-height:1.65;max-width:520px;margin:0 auto">Comece por qualquer lado. Quando chegar ao centro, vire a revista e descubra uma nova narrativa.</p>
+        </div>
+        <div style="{{ modalGrid }}">
+          <!-- KIDS COVER (left) -->
+          <div style="display:flex;flex-direction:column;align-items:center;gap:14px">
+            <div onClick="{{ readKids }}" style="cursor:pointer;width:210px;aspect-ratio:735/1040;border-radius:12px;overflow:hidden;position:relative;box-shadow:0 20px 46px rgba(0,0,0,.32);background:#2a1550;transition:transform .28s" style-hover="transform:translateY(-6px) scale(1.02)">
+              <img src="assets/pages/pg-56.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" />
+              <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(20,8,40,.55));display:flex;align-items:flex-end;justify-content:center;padding-bottom:16px;opacity:0;transition:opacity .28s" style-hover="opacity:1">
+                <span style="background:#ff8a34;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;padding:9px 18px;border-radius:30px">Ler agora ›</span>
+              </div>
+            </div>
+            <div style="text-align:center">
+              <div style="font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;color:var(--p-ink)">Lado Infantil</div>
+              <div style="font-size:12px;color:var(--p-mut)">Ciência para crianças</div>
+            </div>
+          </div>
+
+          <!-- CENTER BUTTON -->
+          <div style="display:flex;flex-direction:column;align-items:center;gap:16px;min-width:150px">
+            <div style="width:1px;height:40px;background:var(--p-border)"></div>
+            <button onClick="{{ startReading }}" style="padding:16px 22px;border:none;border-radius:40px;background:var(--p-acc);color:#fff;font-size:15px;font-weight:700;cursor:pointer;font-family:'Archivo';white-space:nowrap;box-shadow:0 12px 30px rgba(18,50,79,.35)" style-hover="filter:brightness(1.08)">Ler edição atual</button>
+            <div style="font-size:11.5px;color:var(--p-mut);text-align:center;max-width:150px;line-height:1.5">ou escolha um lado para começar</div>
+            <div style="width:1px;height:40px;background:var(--p-border)"></div>
+          </div>
+
+          <!-- ADULT COVER (right) -->
+          <div style="display:flex;flex-direction:column;align-items:center;gap:14px">
+            <div onClick="{{ readAdult }}" style="cursor:pointer;width:210px;aspect-ratio:735/1040;border-radius:12px;overflow:hidden;position:relative;box-shadow:0 20px 46px rgba(0,0,0,.42);background:#05070d;transition:transform .28s" style-hover="transform:translateY(-6px) scale(1.02)">
+              <img src="assets/pages/pg-01.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" />
+              <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.5));display:flex;align-items:flex-end;justify-content:center;padding-bottom:16px;opacity:0;transition:opacity .28s" style-hover="opacity:1">
+                <span style="background:#f0c65a;color:#20160a;font-family:'Archivo';font-weight:700;font-size:13px;padding:9px 18px;border-radius:30px">Ler agora ›</span>
+              </div>
+            </div>
+            <div style="text-align:center">
+              <div style="font-family:'Spectral',serif;font-size:15px;color:var(--p-ink)">Lado Adulto</div>
+              <div style="font-size:12px;color:var(--p-mut)">Reportagens científicas</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- Cookie banner -->
+  <sc-if value="{{ showCookie }}" hint-placeholder-val="">
+    <div style="position:fixed;left:20px;bottom:20px;z-index:55;width:min(420px,calc(100vw - 40px));background:var(--p-panel);border:1px solid var(--p-border);border-radius:16px;padding:20px;box-shadow:0 24px 60px rgba(0,0,0,.28);animation:rvrise .4s ease both">
+      <div style="font-weight:700;font-size:14px;color:var(--p-ink);margin-bottom:6px">🍪 Privacidade & Cookies</div>
+      <div style="font-size:12.5px;color:var(--p-mut);line-height:1.6;margin-bottom:14px">Usamos cookies para lembrar suas leituras, em conformidade com a LGPD. Consulte nossa <a href="#" onClick="{{ openPriv }}" style="color:var(--p-acc)">Política de Privacidade</a>.</div>
+      <div style="display:flex;gap:10px">
+        <button onClick="{{ acceptCookies }}" style="flex:1;padding:11px;border:none;border-radius:10px;background:var(--p-acc);color:#fff;font-weight:600;cursor:pointer;font-family:'Archivo'">Aceitar</button>
+        <button onClick="{{ acceptCookies }}" style="padding:11px 16px;border:1px solid var(--p-border);border-radius:10px;background:transparent;color:var(--p-ink);font-weight:600;cursor:pointer;font-family:'Archivo'">Só essenciais</button>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+</div>
+</sc-if>
+
+<!-- READER -->
+<sc-if value="{{ readerOpen }}" hint-placeholder-val="">
+<div style="{{ readerVars }}">
+<div ref="{{ setRoot }}" style="position:fixed;inset:0;z-index:80;background:var(--rd-back);display:flex;flex-direction:column;font-family:'Archivo',sans-serif">
+
+  <!-- toolbar -->
+  <sc-if value="{{ chromeShown }}" hint-placeholder-val="{{ true }}">
+  <div style="{{ toolbarStyle }}">
+    <button onClick="{{ closeReader }}" title="Fechar" style="width:40px;height:40px;border:none;border-radius:11px;background:transparent;color:var(--cur-ink);cursor:pointer;font-size:17px" style-hover="background:var(--cur-hover)">✕</button>
+    <div style="font-family:{{ curSerif }};font-size:16px;color:var(--cur-ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:250px">{{ readerTitle }}</div>
+    <div style="flex:1;min-width:8px"></div>
+    <div style="{{ toolbarBtns }}">
+      <button onClick="{{ toggleFav }}" title="Favoritar" style="{{ favBtn }}" style-hover="background:var(--cur-hover)">{{ favIcon }}</button>
+      <button onClick="{{ openNotes }}" title="Anotações" style="width:40px;height:40px;border:none;border-radius:11px;background:transparent;color:var(--cur-ink);cursor:pointer;font-size:16px" style-hover="background:var(--cur-hover)">✎</button>
+      <button onClick="{{ openOpinion }}" title="Comentar" style="width:40px;height:40px;border:none;border-radius:11px;background:transparent;color:var(--cur-ink);cursor:pointer;font-size:16px" style-hover="background:var(--cur-hover)">💬</button>
+      <button onClick="{{ openDraw }}" title="Desenhar" style="width:40px;height:40px;border:none;border-radius:11px;background:transparent;color:var(--cur-ink);cursor:pointer;font-size:16px" style-hover="background:var(--cur-hover)">🎨</button>
+      <button onClick="{{ voiceRead }}" title="Áudio (leitura por voz)" style="{{ voiceBtn }}" style-hover="background:var(--cur-hover)">{{ voiceIcon }}</button>
+      <span style="width:1px;height:24px;background:var(--cur-rule);margin:0 4px"></span>
+      <button onClick="{{ decFont }}" title="Diminuir fonte" style="width:36px;height:40px;border:none;border-radius:11px;background:transparent;color:var(--cur-ink);cursor:pointer;font-size:13px" style-hover="background:var(--cur-hover)">A−</button>
+      <button onClick="{{ incFont }}" title="Aumentar fonte" style="width:36px;height:40px;border:none;border-radius:11px;background:transparent;color:var(--cur-ink);cursor:pointer;font-size:17px" style-hover="background:var(--cur-hover)">A+</button>
+      <button onClick="{{ toggleHC }}" title="Alto contraste" style="{{ hcBtn }}" style-hover="background:var(--cur-hover)">◐</button>
+      <button onClick="{{ toggleRdDark }}" title="Claro/escuro" style="width:40px;height:40px;border:none;border-radius:11px;background:transparent;color:var(--cur-ink);cursor:pointer;font-size:15px" style-hover="background:var(--cur-hover)">{{ rdDarkIcon }}</button>
+      <span style="width:1px;height:24px;background:var(--cur-rule);margin:0 4px"></span>
+      <button onClick="{{ virar }}" style="{{ virarBtn }}" style-hover="filter:brightness(1.08)">↻ Virar Revista</button>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- stage -->
+  <div style="flex:1;position:relative;overflow:hidden;perspective:2800px;display:grid;place-items:center;padding:22px">
+    <div style="position:absolute;top:14px;left:50%;transform:translateX(-50%);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--cur-faint);transition:color .6s">{{ sectionLabel }}</div>
+
+    <div style="{{ stageStyle }}">
+      <div key="{{ turnKey }}" style="{{ turnStyle }}">
+        <div style="{{ spreadStyle }}">
+          <sc-if value="{{ spreadReady }}" hint-placeholder-val="">
+          <sc-for list="{{ spreadPages }}" as="pg" hint-placeholder-count="0">
+            <div style="{{ pg.wrap }}">
+              <div style="{{ pg.imgStyle }}"></div>
+              <div style="{{ pg.spine }}"></div>
+            </div>
+          </sc-for>
+          </sc-if>
+        </div>
+
+        <sc-if value="{{ turning }}" hint-placeholder-val="">
+          <div style="position:absolute;inset:0;pointer-events:none;z-index:9;overflow:hidden;border-radius:6px">
+            <div style="position:absolute;top:-10%;bottom:-10%;left:0;width:55%;background:linear-gradient(100deg,transparent 28%,rgba(255,255,255,.5) 50%,transparent 72%);animation:sheenSweep .62s ease both"></div>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+
+    <button onClick="{{ prev }}" title="Anterior" style="{{ prevBtn }}" style-hover="background:var(--cur-bar)">‹</button>
+    <button onClick="{{ next }}" title="Próxima" style="{{ nextBtn }}" style-hover="background:var(--cur-bar)">›</button>
+
+    <!-- creative center notice: the kids universe begins here -->
+    <sc-if value="{{ showCenterNotice }}" hint-placeholder-val="">
+      <div style="position:absolute;left:50%;bottom:22px;transform:translateX(-50%);z-index:7;display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,#3a2352,#150a24);border:2px dashed #ffd34d;border-radius:40px;padding:12px 20px 12px 16px;box-shadow:0 18px 44px rgba(0,0,0,.4);animation:rvrise .5s ease both;max-width:92%">
+        <div style="font-size:30px;animation:rvfloat 2.6s ease-in-out infinite;flex-shrink:0">🚀</div>
+        <div style="color:#fff;min-width:0">
+          <div style="font-family:'Baloo 2',sans-serif;font-weight:800;font-size:15px;color:#ffd34d;line-height:1.2">{{ centerNoticeTitle }}</div>
+          <div style="font-family:'Fredoka',sans-serif;font-size:12.5px;color:#e8ddf5;line-height:1.45;margin-top:2px">{{ centerNoticeText }}</div>
+        </div>
+        <button onClick="{{ virar }}" style="flex-shrink:0;padding:11px 18px;border:none;border-radius:30px;background:#ff8a34;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13.5px;cursor:pointer;white-space:nowrap;animation:rvpulse 2s ease-in-out infinite" style-hover="filter:brightness(1.1)">↻ Virar Revista</button>
+      </div>
+    </sc-if>
+  </div>
+
+  <!-- footer -->
+  <sc-if value="{{ chromeShown }}" hint-placeholder-val="{{ true }}">
+  <div style="{{ footerStyle }}">
+    <span style="font-size:12.5px;color:var(--cur-ink)">{{ pageLabel }}</span>
+    <div style="flex:1;height:5px;background:var(--cur-rule);border-radius:20px;overflow:hidden">
+      <div style="{{ progStyle }}"></div>
+    </div>
+    <sc-if value="{{ captions }}" hint-placeholder-val="">
+      <span style="font-size:12px;color:var(--cur-faint);font-style:italic">[legenda ativa]</span>
+    </sc-if>
+    <button onClick="{{ togglePairMode }}" title="Uma / duas páginas" style="padding:7px 12px;border:1px solid var(--cur-rule);border-radius:9px;background:transparent;color:var(--cur-ink);font-size:12px;cursor:pointer;font-family:'Archivo'">{{ pairModeLabel }}</button>
+    <button onClick="{{ toggleCaptions }}" title="Legendas" style="padding:7px 12px;border:1px solid var(--cur-rule);border-radius:9px;background:transparent;color:var(--cur-ink);font-size:12px;cursor:pointer;font-family:'Archivo'">CC</button>
+    <button onClick="{{ toggleFullscreen }}" title="Tela cheia" style="padding:7px 14px;border:none;border-radius:9px;background:var(--cur-ink);color:var(--rd-back);font-size:12px;font-weight:600;cursor:pointer;font-family:'Archivo';white-space:nowrap">⛶ Tela cheia</button>
+  </div>
+  </sc-if>
+
+  <!-- immersive exit -->
+  <sc-if value="{{ immersive }}" hint-placeholder-val="">
+    <button onClick="{{ toggleFullscreen }}" title="Sair da tela cheia" style="position:fixed;top:14px;right:14px;z-index:95;padding:10px 16px;border:none;border-radius:30px;background:rgba(10,14,20,.72);color:#fff;font-size:12.5px;font-weight:600;cursor:pointer;font-family:'Archivo';backdrop-filter:blur(6px)">✕ Sair da tela cheia</button>
+  </sc-if>
+
+  <!-- Opinion modal -->
+  <sc-if value="{{ opinionOpen }}" hint-placeholder-val="">
+    <div onClick="{{ closeOpinion }}" style="position:fixed;inset:0;z-index:90;background:rgba(6,12,18,.55);display:grid;place-items:center;padding:24px">
+      <div onClick="{{ stop }}" style="width:min(440px,100%);background:#fff;border-radius:20px;padding:28px;animation:rvpop .28s ease both;box-shadow:0 30px 80px rgba(0,0,0,.4)">
+        <sc-if value="{{ opSent }}" hint-placeholder-val="">
+          <div style="text-align:center;padding:14px 0">
+            <div style="font-size:44px;margin-bottom:10px">✓</div>
+            <div style="font-family:'Spectral',serif;font-size:20px;color:#16272d;margin-bottom:8px">Comentário enviado!</div>
+            <div style="font-size:14px;color:#5f7076;line-height:1.6">Obrigado. Sua opinião foi enviada para a redação da Reverso.</div>
+            <button onClick="{{ closeOpinion }}" style="margin-top:20px;padding:12px 28px;border:none;border-radius:11px;background:#12324f;color:#fff;font-weight:600;cursor:pointer;font-family:'Archivo'">Fechar</button>
+          </div>
+        </sc-if>
+        <sc-if value="{{ opForm }}" hint-placeholder-val="{{ true }}">
+          <div style="font-family:'Spectral',serif;font-size:22px;color:#16272d;margin-bottom:4px">Comentar este trecho</div>
+          <div style="font-size:13px;color:#5f7076;margin-bottom:20px">Sua opinião ajuda a redação a construir a próxima edição.</div>
+          <input value="{{ opName }}" onChange="{{ onOpName }}" placeholder="Seu nome" style="width:100%;padding:13px 15px;border:1px solid #dcd6ca;border-radius:11px;font-size:14px;margin-bottom:12px;outline:none;font-family:'Archivo'" />
+          <textarea value="{{ opText }}" onChange="{{ onOpText }}" placeholder="Escreva seu comentário…" style="width:100%;min-height:110px;padding:13px 15px;border:1px solid #dcd6ca;border-radius:11px;font-size:14px;resize:vertical;outline:none;font-family:'Archivo'"></textarea>
+          <div style="display:flex;gap:10px;margin-top:16px">
+            <button onClick="{{ sendOpinion }}" style="flex:1;padding:13px;border:none;border-radius:11px;background:#12324f;color:#fff;font-weight:600;cursor:pointer;font-family:'Archivo'">Enviar</button>
+            <button onClick="{{ closeOpinion }}" style="padding:13px 20px;border:1px solid #dcd6ca;border-radius:11px;background:transparent;color:#16272d;font-weight:600;cursor:pointer;font-family:'Archivo'">Cancelar</button>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- Notes modal -->
+  <sc-if value="{{ notesOpen }}" hint-placeholder-val="">
+    <div onClick="{{ closeNotes }}" style="position:fixed;inset:0;z-index:90;background:rgba(6,12,18,.55);display:grid;place-items:center;padding:24px">
+      <div onClick="{{ stop }}" style="width:min(440px,100%);background:#fff;border-radius:20px;padding:28px;animation:rvpop .28s ease both;box-shadow:0 30px 80px rgba(0,0,0,.4)">
+        <div style="font-family:'Spectral',serif;font-size:22px;color:#16272d;margin-bottom:4px">Anotações</div>
+        <div style="font-size:13px;color:#5f7076;margin-bottom:18px">{{ pageLabel }}</div>
+        <textarea value="{{ note }}" onChange="{{ onNote }}" placeholder="Escreva uma anotação…" style="width:100%;min-height:130px;padding:13px 15px;border:1px solid #dcd6ca;border-radius:11px;font-size:14px;resize:vertical;outline:none;font-family:'Archivo'"></textarea>
+        <sc-if value="{{ noteSaved }}" hint-placeholder-val="">
+          <div style="font-size:13px;color:#2f9e58;margin-top:10px">✓ Anotação salva neste dispositivo.</div>
+        </sc-if>
+        <div style="display:flex;gap:10px;margin-top:16px">
+          <button onClick="{{ saveNote }}" style="flex:1;padding:13px;border:none;border-radius:11px;background:#12324f;color:#fff;font-weight:600;cursor:pointer;font-family:'Archivo'">Salvar</button>
+          <button onClick="{{ closeNotes }}" style="padding:13px 20px;border:1px solid #dcd6ca;border-radius:11px;background:transparent;color:#16272d;font-weight:600;cursor:pointer;font-family:'Archivo'">Fechar</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- Drawing modal -->
+  <sc-if value="{{ drawOpen }}" hint-placeholder-val="">
+    <div style="position:fixed;inset:0;z-index:92;background:rgba(6,12,18,.6);display:grid;place-items:center;padding:24px">
+      <div style="width:min(720px,100%);background:#fffdf7;border-radius:22px;padding:22px;animation:rvpop .28s ease both;box-shadow:0 30px 80px rgba(0,0,0,.45)">
+        <sc-if value="{{ drawSent }}" hint-placeholder-val="">
+          <div style="text-align:center;padding:40px 20px">
+            <div style="font-size:56px;margin-bottom:14px;animation:rvfloat 3s ease-in-out infinite">🎉</div>
+            <div style="font-family:'Baloo 2',sans-serif;font-weight:700;font-size:24px;color:#3a2e57;margin-bottom:10px">Desenho enviado!</div>
+            <div style="font-family:'Fredoka',sans-serif;font-size:15px;color:#7b6f97;line-height:1.6;max-width:440px;margin:0 auto">Seu desenho foi enviado para a Reverso e poderá aparecer na Galeria dos Pequenos Cientistas.</div>
+            <button onClick="{{ closeDraw }}" style="margin-top:22px;padding:13px 30px;border:none;border-radius:30px;background:#ff8a34;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;cursor:pointer">Fechar</button>
+          </div>
+        </sc-if>
+        <sc-if value="{{ drawForm }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+            <div style="font-family:'Baloo 2',sans-serif;font-weight:700;font-size:20px;color:#3a2e57">🎨 Área de desenho</div>
+            <button onClick="{{ closeDraw }}" style="width:36px;height:36px;border:none;border-radius:50%;background:#efe9dc;color:#3a2e57;cursor:pointer;font-size:15px">✕</button>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px">
+            <button onClick="{{ pickPencil }}" style="{{ toolPencil }}">✏️ Lápis</button>
+            <button onClick="{{ pickEraser }}" style="{{ toolEraser }}">🧽 Borracha</button>
+            <span style="width:1px;height:26px;background:#e2dccb"></span>
+            <sc-for list="{{ palette }}" as="c" hint-placeholder-count="7">
+              <button onClick="{{ c.pick }}" style="{{ c.style }}"></button>
+            </sc-for>
+            <span style="flex:1"></span>
+            <button onClick="{{ clearCanvas }}" style="padding:9px 15px;border:1px solid #e2dccb;border-radius:10px;background:#fff;color:#3a2e57;font-family:'Fredoka',sans-serif;font-weight:500;cursor:pointer">Limpar</button>
+          </div>
+          <canvas ref="{{ setCanvas }}" width="1360" height="760" onPointerDown="{{ pDown }}" onPointerMove="{{ pMove }}" onPointerUp="{{ pUp }}" onPointerLeave="{{ pUp }}" style="width:100%;aspect-ratio:1360/760;background:#fff;border-radius:16px;border:2px solid #efe6d2;touch-action:none;cursor:crosshair;display:block"></canvas>
+          <div style="display:flex;justify-content:flex-end;margin-top:14px">
+            <button onClick="{{ sendDraw }}" style="padding:13px 30px;border:none;border-radius:30px;background:#2fbf6a;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;cursor:pointer">Enviar desenho</button>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+</div>
+</sc-if>
+
+<!-- LGPD -->
+<sc-if value="{{ lgpdOpen }}" hint-placeholder-val="">
+  <div onClick="{{ closeLgpd }}" style="position:fixed;inset:0;z-index:120;background:rgba(6,12,18,.7);backdrop-filter:blur(4px);display:grid;place-items:center;padding:26px">
+    <div onClick="{{ stop }}" style="width:min(680px,100%);max-height:86vh;overflow:auto;background:#fbf9f4;border-radius:22px;padding:36px 40px;animation:rvpop .3s ease both;box-shadow:0 40px 100px rgba(0,0,0,.5)">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#12324f">Revista Reverso</div>
+        <button onClick="{{ closeLgpd }}" style="width:36px;height:36px;border:none;border-radius:50%;background:#ece7dd;color:#16272d;cursor:pointer;font-size:15px">✕</button>
+      </div>
+      <h2 style="font-family:'Spectral',serif;font-weight:500;font-size:28px;color:#16272d;margin:6px 0 18px">{{ lgpdTitle }}</h2>
+      <div style="font-size:14px;line-height:1.8;color:#3a4a4f">
+        <sc-for list="{{ lgpdBody }}" as="p" hint-placeholder-count="4">
+          <p style="margin:0 0 14px">{{ p }}</p>
+        </sc-for>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:22px;flex-wrap:wrap">
+        <button onClick="{{ showPriv }}" style="{{ lgpdTab1 }}">Privacidade</button>
+        <button onClick="{{ showTerms }}" style="{{ lgpdTab2 }}">Termos de Uso</button>
+        <button onClick="{{ showConsent }}" style="{{ lgpdTab3 }}">Consentimento LGPD</button>
+        <span style="flex:1"></span>
+        <button onClick="{{ closeLgpd }}" style="padding:11px 24px;border:none;border-radius:11px;background:#12324f;color:#fff;font-weight:600;cursor:pointer;font-family:'Archivo'">Entendi</button>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ toast }}" hint-placeholder-val="">
+  <div style="position:fixed;left:50%;bottom:34px;z-index:200;transform:translateX(-50%);background:#16272d;color:#f3efe6;padding:13px 22px;border-radius:30px;font-size:13.5px;font-weight:500;box-shadow:0 16px 40px rgba(0,0,0,.35);animation:toastin .3s ease both;font-family:'Archivo'">{{ toast }}</div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:800},&quot;platformName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Revista Reverso&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;demoCredentials&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  constructor(props){
+    super(props);
+    this.state = {
+      view:'login', user:'', pass:'', err:'',
+      loadPct:0, cat:'Página Inicial',
+      modalOpen:false, reader:false,
+      spread:0, flipped:false, pairMode:'double', turn:null, turnKey:0, immersive:false,
+      dark:false, hc:false, fs:1, rdDark:false, captions:false, voiceOn:false,
+      drawOpen:false, drawSent:false, tool:'pencil', color:'#e0483d',
+      opinionOpen:false, opName:'', opText:'', opSent:false,
+      notesOpen:false, note:'', noteSaved:false,
+      lgpd:null, cookie:false, toast:'', favs:{}, mobile:false
+    };
+    this._draw=false; this._lx=0; this._ly=0; this._canvas=null;
+  }
+  componentDidMount(){
+    try{ this.setState({cookie: localStorage.getItem('reverso_cookie')==='1'}); }catch(e){}
+    try{
+      this._mq=window.matchMedia('(max-width: 760px)');
+      this.setState({mobile:this._mq.matches});
+      this._mqFn=(e)=>this.setState({mobile:e.matches});
+      if(this._mq.addEventListener) this._mq.addEventListener('change',this._mqFn);
+      else if(this._mq.addListener) this._mq.addListener(this._mqFn); // Safari iOS <14
+    }catch(e){}
+    document.addEventListener('keydown', this._key=(e)=>{
+      if(!this.state.reader) return;
+      if(e.key==='ArrowRight') this.next();
+      else if(e.key==='ArrowLeft') this.prev();
+      else if(e.key==='Escape'){ if(this.state.immersive) this.setState({immersive:false}); else this.closeReader(); }
+    });
+  }
+  componentWillUnmount(){
+    if(this._li) clearInterval(this._li);
+    if(this._t1) clearTimeout(this._t1); if(this._t2) clearTimeout(this._t2);
+    if(this._key) document.removeEventListener('keydown', this._key);
+    try{ if(this._mq){ if(this._mq.removeEventListener) this._mq.removeEventListener('change',this._mqFn); else if(this._mq.removeListener) this._mq.removeListener(this._mqFn); } }catch(e){}
+  }
+  flash(m){ this.setState({toast:m}); clearTimeout(this._tt); this._tt=setTimeout(()=>this.setState({toast:''}),2400); }
+
+  /* ---------- content ---------- */
+  build(){
+    if(this._c) return this._c;
+    // All 56 real pages of the printed magazine (rendered from the PDF, unaltered).
+    const src=(n)=>'assets/pages/pg-'+(n<10?'0':'')+n+'.jpg';
+    // Section map (by PDF page) for the audio/voice reader and labels.
+    const sec={1:'Capa',2:'Sumário',3:'Editorial',4:'Expediente',5:'Índice',6:'Saúde em Foco: A indústria da cura',7:'Saúde em Foco',8:'A vida imita a arte: Jurassic Park',9:'Investigação Científica: carros voadores',10:'Perspectiva Cósmica: Efeito Overview',11:'Perspectiva Cósmica',12:'Planetas Fora do Eixo: Vênus e Urano',13:'Física do Cotidiano: Termodinâmica',14:'Segredos da Vida: editar a vida',15:'Segredos da Vida',16:'Tecnologia: o algoritmo e a máquina de decisões',17:'Crônica: o café e o cérebro',18:'Olhar em Lupa: o cosmonauta perdido',19:'Olhar em Lupa',20:'Universo Feminino: passagem só de ida para Marte',21:'Ciência e Curiosidade',22:'Ciência Brasileira em destaque',23:'Como Somos: prisioneiros da mente',24:'Mente Astronômica: o buraco negro',25:'Olhar em Lupa: o cosmonauta perdido',26:'Mente Astronômica',27:'Centro — Vire para o outro lado',28:'Centro — Vire para o outro lado',29:'Astronomicamente: e se você caísse num buraco negro?',30:'Astronomicamente',31:'Alerta de Espaguete!',32:'Como Somos: hobbies e o cérebro',33:'Curiosidade e Ciência: plantas carnívoras',34:'Curiosidade e Ciência',35:'Universo Feminino: mulheres do Universo',36:'Universo Feminino',37:'Tecnologia: por que sua IA fica maluca?',38:'Tecnologia',39:'Olhar em Lupa: o céu colorido',40:'Olhar em Lupa: o céu colorido',41:'Segredos da Vida: clonagem',42:'Segredos da Vida',43:'Planetas Fora do Eixo: planetas órfãos',44:'Física do Cotidiano: frio e calor',45:'E se morássemos em outro planeta? Marte',46:'Missão: mala de sobrevivência',47:'Detetives da Ciência: os ímãs invisíveis',48:'Detetives da Ciência',49:'Saúde em Foco: o poder de acreditar',50:'Saúde em Foco',51:'Curiosidade: constelações',52:'Passatempos',53:'Passatempos',54:'Contracapa interna',55:'Expediente infantil',56:'Capa infantil'};
+    // Adult side reads front->center (pages 1..28); kids side reads its cover(56)->center (56..29).
+    // Build a single ordered flipbook of spreads, paginated like a real magazine:
+    // [1] alone, then facing pairs [2,3],[4,5]...[54,55], then [56] alone.
+    const N=56;
+    const pages=[]; for(let i=1;i<=N;i++) pages.push({n:i, src:src(i), sec:sec[i]||('Página '+i)});
+    this._pages=pages;
+    // Magazine pairing: cover alone, then facing pages [2,3],[4,5]…[54,55], back cover alone.
+    const dbl=[[pages[0]]];
+    for(let i=1;i<N-1;i+=2){ dbl.push([pages[i],pages[i+1]]); }
+    dbl.push([pages[N-1]]);
+    const sgl=pages.map(p=>[p]);
+    this._spreadsDouble=dbl; this._spreadsSingle=sgl;
+    this._c=true;
+    return true;
+  }
+  spreadsFor(mode){ this.build(); return mode==='single'?this._spreadsSingle:this._spreadsDouble; }
+  spreads(){ return this.spreadsFor(this.state.pairMode); }
+
+  /* ---------- login/loading ---------- */
+  onUser=e=>this.setState({user:e.target.value,err:''});
+  onPass=e=>this.setState({pass:e.target.value,err:''});
+  onKey=e=>{ if(e.key==='Enter') this.doLogin(); };
+  doLogin=()=>{
+    const u=this.state.user.trim().toLowerCase(), p=this.state.pass.trim();
+    if(!((u==='jornalismo'||u==='uemg')&&p==='2026')){ this.setState({err:'Usuário ou senha inválidos. Tente jornalismo · 2026.'}); return; }
+    this.setState({view:'loading',loadPct:0});
+    this._li=setInterval(()=>{
+      this.setState(s=>{ const n=Math.min(100,s.loadPct+(5+Math.random()*9));
+        if(n>=100){ clearInterval(this._li); setTimeout(()=>this.setState({view:'platform'}),450); }
+        return {loadPct:Math.round(n)};
+      });
+    },140);
+  };
+
+  /* ---------- platform ---------- */
+  setCat=c=>()=>this.setState({cat:c});
+  goHome=()=>this.setState({cat:'Página Inicial'});
+  goGaleria=()=>this.setState({cat:'Galeria'});
+  goAnteriores=()=>this.setState({cat:'Edições Anteriores'});
+  toggleDark=()=>this.setState(s=>({dark:!s.dark}));
+  acceptCookies=()=>{ try{localStorage.setItem('reverso_cookie','1');}catch(e){} this.setState({cookie:true}); this.flash('Preferências salvas.'); };
+  openMagazine=()=>this.setState({modalOpen:true});
+  closeModal=()=>this.setState({modalOpen:false});
+  stop=e=>e.stopPropagation();
+  startReading=()=>{ this.build(); this.setState({modalOpen:false,reader:true,flipped:false,spread:0,turn:null}); };
+  readAdult=()=>{ this.build(); this.setState({modalOpen:false,reader:true,flipped:false,spread:0,turn:null}); };
+  readKids=()=>{ this.build(); this.setState({modalOpen:false,reader:true,flipped:true,spread:this.spreads().length-1,turn:null}); };
+  closeReader=()=>{ try{window.speechSynthesis&&window.speechSynthesis.cancel();}catch(e){} try{if(document.fullscreenElement)document.exitFullscreen();}catch(e){} this.setState({reader:false,voiceOn:false,immersive:false}); };
+
+  /* ---------- reader nav ---------- */
+  maxSpread(){ return this.spreads().length-1; }
+  isKidsSpread(idx){ const sp=this.spreads()[idx]; return !!(sp && sp.some(p=>p.n>=29)); }
+  turnTo=(dir)=>{
+    const now=Date.now();
+    if(this._anim && (now-(this._animAt||0))<1000) return;
+    const idx=this.state.spread, max=this.maxSpread();
+    if(dir==='next'&&idx>=max) return;
+    if(dir==='prev'&&idx<=0) return;
+    this._anim=true; this._animAt=now;
+    this.setState(st=>({turn:{dir,phase:'out'}, turnKey:st.turnKey+1}));
+    this._t1=setTimeout(()=>{
+      this.setState(st=>{
+        const d=dir==='next'?1:-1;
+        return {spread:st.spread+d, turn:{dir,phase:'in'}, turnKey:st.turnKey+1};
+      });
+      this._t2=setTimeout(()=>{ this.setState({turn:null}); this._anim=false; },430);
+    },260);
+  };
+  // when flipped (kids side), the magazine is upside-down, so reading advances backwards
+  next=()=>this.turnTo(this.state.flipped?'prev':'next');
+  prev=()=>this.turnTo(this.state.flipped?'next':'prev');
+  virar=()=>{
+    if(this._anim) return;
+    this.build();
+    const goingKids=!this.state.flipped;
+    const target=goingKids?this.maxSpread():0;
+    this.setState({flipped:goingKids, spread:target, turn:null});
+    this.flash(goingKids?'Virando a revista para o lado infantil (de cabeça para baixo, como na revista impressa)…':'Virando a revista para o lado adulto…');
+  };
+  togglePairMode=()=>{
+    this.build();
+    const cur=this.spreads()[this.state.spread]||[];
+    const firstN=cur[0]?cur[0].n:1;
+    const nextMode=this.state.pairMode==='double'?'single':'double';
+    const arr=this.spreadsFor(nextMode);
+    let idx=arr.findIndex(sp=>sp.some(p=>p.n===firstN)); if(idx<0)idx=0;
+    this.setState({pairMode:nextMode, spread:idx, turn:null});
+    this.flash(nextMode==='double'?'Visualização: duas páginas':'Visualização: uma página');
+  };
+  setRoot=el=>{ if(el) this._root=el; };
+  toggleFullscreen=()=>{
+    const goingOn=!this.state.immersive;
+    // Immersive mode always works (hides the platform chrome and expands the magazine).
+    this.setState({immersive:goingOn});
+    // Additionally try the native Fullscreen API where the browser allows it.
+    try{
+      const d=document;
+      const fsEl=d.fullscreenElement||d.webkitFullscreenElement;
+      if(goingOn && !fsEl){
+        const el=this._root||d.documentElement;
+        const req=el.requestFullscreen||el.webkitRequestFullscreen;
+        if(req){ const p=req.call(el); if(p&&p.catch) p.catch(()=>{}); }
+      } else if(!goingOn && fsEl){
+        const ex=d.exitFullscreen||d.webkitExitFullscreen;
+        if(ex){ const p=ex.call(d); if(p&&p.catch) p.catch(()=>{}); }
+      }
+    }catch(e){}
+    this.flash(goingOn?'Tela cheia — Esc ou ✕ para sair':'Saindo da tela cheia');
+  };
+
+  /* ---------- tools ---------- */
+  favKey(){ return 'p'+this.state.spread; }
+  toggleFav=()=>{ const k=this.favKey(); this.setState(s=>{const f={...s.favs};f[k]=!f[k];return {favs:f};}); this.flash(this.state.favs[this.favKey()]?'Removido dos favoritos':'Página favoritada ⭐'); };
+  likeExcerpt=()=>this.flash('Você curtiu este trecho ♥');
+  incFont=()=>this.setState(s=>({fs:Math.min(1.4,+(s.fs+0.1).toFixed(2))}));
+  decFont=()=>this.setState(s=>({fs:Math.max(0.8,+(s.fs-0.1).toFixed(2))}));
+  toggleHC=()=>this.setState(s=>({hc:!s.hc}));
+  toggleRdDark=()=>this.setState(s=>({rdDark:!s.rdDark}));
+  toggleCaptions=()=>this.setState(s=>({captions:!s.captions}));
+  voiceRead=()=>{
+    try{
+      const synth=window.speechSynthesis; if(!synth){this.flash('Áudio indisponível');return;}
+      if(this.state.voiceOn){ synth.cancel(); this.setState({voiceOn:false}); return; }
+      this.build(); const sp=this.spreads()[this.state.spread]||[];
+      let txt='Revista Reverso, edição dezoito. '+sp.map(p=>'Página '+p.n+'. '+p.sec+'.').join(' ');
+      const u=new SpeechSynthesisUtterance(txt); u.lang='pt-BR'; u.rate=.98; u.onend=()=>this.setState({voiceOn:false});
+      synth.cancel(); synth.speak(u); this.setState({voiceOn:true}); this.flash('▶ Áudio iniciado');
+    }catch(e){ this.flash('Áudio indisponível'); }
+  };
+  openOpinion=()=>this.setState({opinionOpen:true,opSent:false});
+  closeOpinion=()=>this.setState({opinionOpen:false});
+  onOpName=e=>this.setState({opName:e.target.value});
+  onOpText=e=>this.setState({opText:e.target.value});
+  sendOpinion=()=>{ if(!this.state.opText.trim()){this.flash('Escreva um comentário antes de enviar.');return;} this.setState({opSent:true}); };
+  openNotes=()=>{ let n=''; try{n=localStorage.getItem('reverso_note_'+this.favKey())||'';}catch(e){} this.setState({notesOpen:true,note:n,noteSaved:false}); };
+  closeNotes=()=>this.setState({notesOpen:false});
+  onNote=e=>this.setState({note:e.target.value,noteSaved:false});
+  saveNote=()=>{ try{localStorage.setItem('reverso_note_'+this.favKey(),this.state.note);}catch(e){} this.setState({noteSaved:true}); };
+  openDraw=()=>this.setState({drawOpen:true,drawSent:false});
+  closeDraw=()=>this.setState({drawOpen:false});
+  pickPencil=()=>this.setState({tool:'pencil'});
+  pickEraser=()=>this.setState({tool:'eraser'});
+  pickColor=c=>()=>this.setState({tool:'pencil',color:c});
+  setCanvas=el=>{ if(el&&el!==this._canvas){ this._canvas=el; const x=el.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,el.width,el.height); x.lineCap='round'; x.lineJoin='round'; } };
+  _pos(e){ const el=this._canvas,r=el.getBoundingClientRect(); return {x:(e.clientX-r.left)*(el.width/r.width),y:(e.clientY-r.top)*(el.height/r.height)}; }
+  pDown=e=>{ if(!this._canvas)return; e.preventDefault(); const p=this._pos(e); this._draw=true; this._lx=p.x; this._ly=p.y; const x=this._canvas.getContext('2d'); x.beginPath(); x.arc(p.x,p.y,(this.state.tool==='eraser'?13:2.5),0,7); x.fillStyle=this.state.tool==='eraser'?'#fff':this.state.color; x.fill(); };
+  pMove=e=>{ if(!this._draw||!this._canvas)return; const p=this._pos(e); const x=this._canvas.getContext('2d'); x.strokeStyle=this.state.tool==='eraser'?'#fff':this.state.color; x.lineWidth=this.state.tool==='eraser'?26:5; x.beginPath(); x.moveTo(this._lx,this._ly); x.lineTo(p.x,p.y); x.stroke(); this._lx=p.x; this._ly=p.y; };
+  pUp=()=>{ this._draw=false; };
+  clearCanvas=()=>{ if(!this._canvas)return; const x=this._canvas.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,this._canvas.width,this._canvas.height); };
+  sendDraw=()=>this.setState({drawSent:true});
+  openPriv=e=>{ if(e)e.preventDefault(); this.setState({lgpd:'priv'}); };
+  openTerms=e=>{ if(e)e.preventDefault(); this.setState({lgpd:'terms'}); };
+  showPriv=()=>this.setState({lgpd:'priv'});
+  showTerms=()=>this.setState({lgpd:'terms'});
+  showConsent=()=>this.setState({lgpd:'consent'});
+  closeLgpd=()=>this.setState({lgpd:null});
+
+  renderVals(){
+    const s=this.state; this.build();
+    const platformName=this.props.platformName ?? 'Revista Reverso';
+    const showHint=this.props.demoCredentials ?? true;
+
+    const mob=s.mobile;
+    // responsive layout containers
+    const loginGrid={minHeight:'100vh',display:'grid',gridTemplateColumns:mob?'1fr':'1.05fr .95fr',background:'#0c1420',color:'#eef3f2'};
+    const loginHero={position:'relative',overflow:'hidden',padding:mob?'28px 24px':'56px 60px',display:'flex',flexDirection:'column',justifyContent:'space-between',gap:mob?'22px':'0',background:'radial-gradient(130% 130% at 20% 0%, #1a2b47 0%, #0a0f1a 62%)'};
+    const platGrid={display:'grid',gridTemplateColumns:mob?'1fr':'236px 1fr',maxWidth:'1440px',margin:'0 auto'};
+    const asideStyle= mob?{display:'none'}:{padding:'26px 16px',borderRight:'1px solid var(--p-border)',minHeight:'calc(100vh - 62px)'};
+    const mainStyle={padding:mob?'18px 16px 70px':'30px 34px 80px'};
+    const heroGrid={position:'relative',borderRadius:'22px',overflow:'hidden',background:'linear-gradient(120deg,#0a0f1a 0%,#16233c 55%,#3a2352 100%)',color:'#eef3f8',padding:mob?'26px 22px':'40px 42px',display:'grid',gridTemplateColumns:mob?'1fr':'1.4fr .9fr',gap:'20px',minHeight:mob?'0':'300px'};
+    const heroCoverWrap= mob?{display:'none'}:{position:'relative',display:'flex',alignItems:'center',justifyContent:'center'};
+    const modalGrid={display:'grid',gridTemplateColumns:mob?'1fr':'1fr auto 1fr',alignItems:'center',justifyItems:'center',gap:'24px',padding:mob?'20px 22px 30px':'24px 40px 40px'};
+
+    const platVars = s.dark
+      ? {'--p-bg':'#0b1017','--p-panel':'#121820','--p-ink':'#e7edf0','--p-mut':'#8b98a0','--p-border':'#20282f','--p-acc':'#4f9fc4','--p-hover':'rgba(255,255,255,.06)'}
+      : {'--p-bg':'#eef1f3','--p-panel':'#ffffff','--p-ink':'#16272d','--p-mut':'#6a747b','--p-border':'#e6e9ea','--p-acc':'#12324f','--p-hover':'rgba(18,50,79,.07)'};
+
+    const catList=['Página Inicial','Edição Atual','Edições Anteriores','Galeria','Sobre'];
+    const cats=catList.map(name=>({name, go: name==='Edição Atual'?this.openMagazine:this.setCat(name),
+      style:{padding:'9px 13px',border:'none',borderRadius:'9px',background:s.cat===name?'var(--p-hover)':'transparent',color:s.cat===name?'var(--p-ink)':'var(--p-mut)',fontWeight:s.cat===name?'600':'500',fontSize:'13.5px',cursor:'pointer',whiteSpace:'nowrap',fontFamily:'Archivo'}}));
+    const sideItems=[['Favoritos','♥',()=>this.flash('Favoritos')],['Continuar Lendo','▸',this.openMagazine],['Galeria de Desenhos','🎨',this.goGaleria],['Edições Anteriores','▤',this.goAnteriores],['Minha Conta','◍',()=>this.flash('Minha Conta')],['Sobre a Reverso','ℹ',this.setCat('Sobre')]];
+    const side=sideItems.map(([name,icon,go])=>({name,icon,go,
+      style:{display:'flex',alignItems:'center',gap:'11px',width:'100%',padding:'11px 12px',border:'none',borderRadius:'10px',background:'transparent',color:'var(--p-mut)',fontSize:'13.5px',fontWeight:'500',cursor:'pointer',textAlign:'left',fontFamily:'Archivo',marginBottom:'2px'}}));
+
+    const edThemes=[['17','O Mistério dos Oceanos','Abr 2026','linear-gradient(160deg,#06364a,#03141f)'],['16','A Era dos Vulcões','Jan 2026','linear-gradient(160deg,#5a1e12,#1c0a06)'],['15','Dentro da Mente Humana','Out 2025','linear-gradient(160deg,#3a1e5a,#140a24)'],['14','Vida Microscópica','Jul 2025','linear-gradient(160deg,#14432a,#06170e)'],['13','A Energia do Futuro','Abr 2025','linear-gradient(160deg,#4a3a06,#1a1403)']];
+    const prevEds=edThemes.map(([num,theme,date,bg])=>({num,theme,date,click:()=>this.flash('Edição Nº '+num+' — esgotada'),
+      cover:{position:'relative',aspectRatio:'3/4',borderRadius:'12px',overflow:'hidden',background:bg,filter:'grayscale(.55)',boxShadow:'0 10px 26px rgba(0,0,0,.18)'}}));
+
+    const gallery=[
+      {src:'assets/gallery/g1.jpg',title:'Meu amigo de outro planeta',author:'Enviado por leitor(a)',ed:'Nº 17'},
+      {src:'assets/gallery/g2.jpg',title:'E se a gente morasse embaixo d\u2019água?',author:'Enviado por leitor(a)',ed:'Nº 17'},
+      {src:'assets/gallery/g3.jpg',title:'Como seríamos se viéssemos dos dinossauros',author:'Enviado por leitor(a)',ed:'Nº 16'},
+      {src:'assets/gallery/g4.jpg',title:'Meu super-poder é…',author:'Enviado por leitor(a)',ed:'Nº 15'}
+    ].map(g=>({...g, imgStyle:{width:'100%',aspectRatio:'4/3',backgroundImage:'url("'+g.src+'")',backgroundSize:'cover',backgroundPosition:'center',borderRadius:'8px'}}));
+
+    // ---- current spread (real page images) ----
+    const idx = this.state.spread;
+    const allSpreads = this.spreads();
+    const totalSpreads = allSpreads.length;
+    const curSpread = allSpreads[idx] || [];
+    const isKids = curSpread.some(p=>p.n>=29);      // theme by real page number
+    const single = this.state.pairMode==='single';
+    const flipped = this.state.flipped;
+    const oneUp = single || curSpread.length<2;   // cover/back cover show alone even in double mode
+    const isCenter = curSpread.some(p=>p.n===28||p.n===29);
+
+    // reader chrome palette (adult = teal/serif, kids = violet/rounded)
+    const hc=s.hc, rdDark=s.rdDark;
+    const backAdult=hc?'#000':(rdDark?'#0a1014':'#c9ced2');
+    const backKids=hc?'#000':(rdDark?'#161226':'#e9dcf7');
+    const cur = isKids
+      ? {bar:(hc?'#000':(rdDark?'#1b1630':'#efe2ff')),ink:(hc?'#fff':(rdDark?'#f2ecff':'#3a2e57')),rule:(hc?'#ffd400':(rdDark?'#2c2350':'#e0cdf5')),hover:(hc?'#222':'rgba(0,0,0,.06)'),faint:(hc?'#e8e8e8':'#7b6f97'),back:backKids,acc:'#ff8a34',gold:'#8a5bff'}
+      : {bar:(hc?'#000':(rdDark?'#0e161c':'#e7ecef')),ink:(hc?'#fff':(rdDark?'#e9eff1':'#16272d')),rule:(hc?'#ffd400':(rdDark?'#243139':'#d5dade')),hover:(hc?'#222':'rgba(0,0,0,.06)'),faint:(hc?'#e8e8e8':'#5f7076'),back:backAdult,acc:'#12324f',gold:'#a8803f'};
+
+    const readerVars={
+      '--fs':s.fs, '--flip':flipped?'180deg':'0deg', '--rd-back':cur.back,
+      '--a-gold':cur.gold,
+      '--cur-bar':cur.bar,'--cur-ink':cur.ink,'--cur-rule':cur.rule,'--cur-hover':cur.hover,'--cur-faint':cur.faint
+    };
+
+    // responsive stage: fit within viewport on iOS/Android/desktop; two-up by default
+    const ar = oneUp ? 0.707 : 1.414;
+    const stageH = s.immersive ? '100dvh - 36px' : '100dvh - 178px';
+    const stageStyle={ position:'relative', aspectRatio: ar+'/1',
+      width:'min(96vw, calc(('+stageH+') * '+ar+'))',
+      maxHeight:'calc('+stageH+' + 28px)',
+      transform:'rotate(var(--flip))', transition:'transform 1.15s cubic-bezier(.76,0,.24,1)' };
+    const spreadStyle={width:'100%',height:'100%',display:'flex',boxShadow:'0 30px 70px rgba(0,0,0,.35)',borderRadius:'4px',background:'#0a0a0a',overflow:'hidden'};
+    const spreadPages = curSpread.map((p,i)=>{
+      const posLeft = !oneUp && i===0;
+      const spine = oneUp ? {display:'none'}
+        : (posLeft
+          ? {position:'absolute',right:0,top:0,bottom:0,width:'30px',background:'linear-gradient(270deg,rgba(0,0,0,.22),transparent)',pointerEvents:'none'}
+          : {position:'absolute',left:0,top:0,bottom:0,width:'30px',background:'linear-gradient(90deg,rgba(0,0,0,.22),transparent)',pointerEvents:'none'});
+      // kids pages (29–56) are printed upside-down (tête-bêche); rotate 180° so the flip makes them upright
+      const rot = p.n>=29 ? 'rotate(180deg)' : 'none';
+      return { n:p.n, src:p.src, alt:'Revista Reverso — página '+p.n,
+        imgStyle:{width:'100%',height:'100%',backgroundImage:'url("'+p.src+'")',backgroundSize:'contain',backgroundPosition:'center',backgroundRepeat:'no-repeat'},
+        wrap:{width:oneUp?'100%':'50%',height:'100%',position:'relative',overflow:'hidden',background:'#0a0a0a',transform:rot}, spine };
+    });
+
+    // page-turn ripple animation (flip itself is the smooth 180° container rotation)
+    let turnName='';
+    if(s.turn){ const ph=s.turn.phase,dr=s.turn.dir; turnName=(ph==='out'?'turnOut':'turnIn')+(dr==='next'?'Next':'Prev'); }
+    const turnDur=(s.turn&&s.turn.phase==='out')?'.26s':'.44s';
+    const turnStyle={width:'100%',height:'100%',position:'relative',transformOrigin:((s.turn&&s.turn.dir==='prev')?'right center':'left center'),animation:turnName?(turnName+' '+turnDur+' cubic-bezier(.34,0,.24,1) both'):'none',willChange:'transform'};
+
+    const pageNums=curSpread.map(p=>String(p.n)).sort((x,y)=>x-y);
+    const pageLabel=(pageNums.length>1?'Páginas ':'Página ')+pageNums.join('–')+' de 56  ·  '+(isKids?'Lado Infantil':'Lado Adulto');
+    const progPct=Math.round(((idx+1)/totalSpreads)*100);
+    const isFav=!!s.favs[this.favKey()];
+    const a={acc:cur.acc};
+
+    // responsive reader chrome
+    const toolbarStyle={flexShrink:0,background:'var(--cur-bar)',borderBottom:'1px solid var(--cur-rule)',display:'flex',alignItems:'center',gap:mob?'6px':'10px',padding:mob?'8px 10px':'10px 16px',transition:'background .6s,border-color .6s',overflowX:'auto'};
+    const toolbarBtns={display:'flex',alignItems:'center',gap:'4px',flexShrink:0};
+    const footerStyle={flexShrink:0,background:'var(--cur-bar)',borderTop:'1px solid var(--cur-rule)',display:'flex',alignItems:'center',gap:mob?'10px':'16px',padding:mob?'8px 12px':'10px 20px',transition:'background .6s',flexWrap:mob?'wrap':'nowrap'};
+
+    const navBtn=(sideKey)=>({position:'absolute',top:'50%',[sideKey]:mob?'6px':'16px',transform:'translateY(-50%)',width:mob?'44px':'52px',height:mob?'44px':'52px',borderRadius:'50%',border:'1px solid var(--cur-rule)',background:'var(--cur-hover)',color:'var(--cur-ink)',fontSize:mob?'22px':'26px',cursor:'pointer',display:'grid',placeItems:'center',backdropFilter:'blur(4px)',zIndex:5});
+    const chipBtn={padding:'9px 14px',border:'1px solid var(--a-rule)',borderRadius:'30px',background:'transparent',color:'var(--a-ink)',fontSize:'calc(12.5px*var(--fs))',fontWeight:'500',cursor:'pointer',fontFamily:'Archivo'};
+    const kchip=(c)=>({padding:'10px 16px',border:'none',borderRadius:'30px',background:c,color:'#fff',fontFamily:"'Baloo 2',sans-serif",fontWeight:'700',fontSize:'calc(13px*var(--fs))',cursor:'pointer'});
+    const iconBtn=(on)=>({width:'40px',height:'40px',border:'none',borderRadius:'11px',background:on?'var(--cur-hover)':'transparent',color:on?(isKids?'#ff8a34':'var(--a-gold)'):'var(--cur-ink)',cursor:'pointer',fontSize:'16px'});
+    const virarBtn={padding:'10px 18px',border:'none',borderRadius:'30px',background:isKids?'#ff8a34':a.acc,color:'#fff',fontWeight:'700',fontSize:'13.5px',cursor:'pointer',fontFamily:isKids?"'Baloo 2',sans-serif":'Archivo',whiteSpace:'nowrap'};
+
+    const palColors=['#e0483d','#ff8a34','#f2c21b','#2fbf6a','#2f8bff','#8a5bff','#111111'];
+    const palette=palColors.map(c=>({pick:this.pickColor(c),style:{width:'26px',height:'26px',borderRadius:'50%',background:c,border:(s.color===c&&s.tool==='pencil')?'3px solid #3a2e57':'2px solid #fff',boxShadow:'0 0 0 1px #ddd',cursor:'pointer',padding:0}}));
+    const toolBase=(on)=>({padding:'9px 14px',border:'1px solid '+(on?'#3a2e57':'#e2dccb'),borderRadius:'10px',background:on?'#efe9f7':'#fff',color:'#3a2e57',fontFamily:"'Fredoka',sans-serif",fontWeight:'500',cursor:'pointer'});
+
+    const lgpdMap={
+      priv:['Política de Privacidade',['A Revista Reverso valoriza a sua privacidade. Esta plataforma é uma simulação acadêmica desenvolvida em grupo no curso de Jornalismo da UEMG (Equipe Reverso).','Coletamos apenas dados necessários ao funcionamento da leitura — preferências de tema, anotações e páginas favoritas — armazenados localmente no seu dispositivo.','Nenhum dado pessoal é transmitido a servidores externos. Anotações, desenhos e comentários enviados são simulações para fins de demonstração.','Você pode limpar os dados do navegador a qualquer momento para remover todas as informações salvas.']],
+      terms:['Termos de Uso',['Ao utilizar esta plataforma, você concorda que se trata de um protótipo acadêmico sem fins comerciais, destinado à apresentação de um trabalho de conclusão de curso.','O conteúdo editorial reproduz textos da edição Nº 18 da Revista Reverso, produzida pela Equipe Reverso, e serve para demonstrar a experiência de leitura digital.','É vedada a reprodução comercial das marcas e identidades visuais. Os direitos das obras pertencem a seus respectivos autores.','A Reverso reserva-se o direito de alterar funcionalidades desta demonstração a qualquer momento.']],
+      consent:['Consentimento LGPD',['Em conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018), informamos como seus dados são tratados nesta demonstração.','Finalidade: melhorar a experiência de leitura e lembrar suas preferências. Base legal: consentimento do titular, manifestado ao aceitar os cookies.','Direitos do titular: acessar, corrigir ou eliminar seus dados e revogar o consentimento pelas configurações do navegador.','Como esta é uma simulação, nenhuma informação é compartilhada com terceiros nem usada além da demonstração acadêmica.']]
+    };
+    const lg=lgpdMap[s.lgpd]||lgpdMap.priv;
+    const lgpdTab=(on)=>({padding:'11px 18px',border:'1px solid '+(on?'#12324f':'#dcd6ca'),borderRadius:'11px',background:on?'#12324f':'transparent',color:on?'#fff':'#16272d',fontWeight:'600',cursor:'pointer',fontFamily:'Archivo',fontSize:'13px'});
+
+    return {
+      isLogin:s.view==='login', isLoading:s.view==='loading', isPlatform:s.view==='platform',
+      user:s.user, pass:s.pass, err:s.err, showHint,
+      onUser:this.onUser, onPass:this.onPass, onKey:this.onKey, doLogin:this.doLogin,
+      openPriv:this.openPriv, openTerms:this.openTerms,
+      loadPct:s.loadPct, loadStyle:{width:s.loadPct+'%',height:'100%',background:'linear-gradient(90deg,#e9e2d4,#f0c65a)',borderRadius:'20px',transition:'width .18s'},
+      platVars, platformName, cats, side, prevEds, gallery, galleryReady:gallery.length>0,
+      loginGrid, loginHero, platGrid, asideStyle, mainStyle, heroGrid, heroCoverWrap, modalGrid,
+      toolbarStyle, toolbarBtns, footerStyle,
+      cat:s.cat, isHome:s.cat==='Página Inicial', isAnteriores:s.cat==='Edições Anteriores', isGaleria:s.cat==='Galeria', isSobre:s.cat==='Sobre',
+      goHome:this.goHome, goGaleria:this.goGaleria, goAnteriores:this.goAnteriores,
+      toggleDark:this.toggleDark, darkIcon:s.dark?'☀':'☾', userInitial:(s.user[0]||'U').toUpperCase(),
+      toast_search:()=>this.flash('Busca no acervo Reverso'),
+      openMagazine:this.openMagazine, modalOpen:s.modalOpen, closeModal:this.closeModal, stop:this.stop,
+      startReading:this.startReading, readAdult:this.readAdult, readKids:this.readKids,
+      showCookie:!s.cookie, acceptCookies:this.acceptCookies,
+      // reader
+      readerOpen:s.reader, readerVars, closeReader:this.closeReader,
+      readerTitle:isKids?'Reverso · Lado Infantil':'Reverso · Edição Nº 18',
+      curSerif:isKids?"'Baloo 2',sans-serif":"'Spectral',serif",
+      sectionLabel:isKids?'Ciência para crianças':'Reportagens científicas',
+      spreadPages, spreadReady:spreadPages.length>0, stageStyle, spreadStyle, turnStyle, turnKey:'t'+s.turnKey, turning:!!s.turn,
+      prev:this.prev, next:this.next, prevBtn:navBtn('left'), nextBtn:navBtn('right'),
+      pageLabel, progStyle:{width:progPct+'%',height:'100%',background:isKids?'#ff8a34':'var(--a-gold)',borderRadius:'20px',transition:'width .3s'},
+      virar:this.virar, virarBtn,
+      toggleFav:this.toggleFav, favIcon:isFav?'★':'☆', favBtn:iconBtn(isFav),
+      openNotes:this.openNotes, openOpinion:this.openOpinion, openDraw:this.openDraw,
+      voiceRead:this.voiceRead, voiceIcon:s.voiceOn?'⏸':'🔊', voiceBtn:iconBtn(s.voiceOn),
+      incFont:this.incFont, decFont:this.decFont, toggleHC:this.toggleHC, hcBtn:iconBtn(s.hc),
+      toggleRdDark:this.toggleRdDark, rdDarkIcon:s.rdDark?'☀':'☾',
+      captions:s.captions, toggleCaptions:this.toggleCaptions,
+      togglePairMode:this.togglePairMode, pairModeLabel:(s.pairMode==='double'?'▭ Uma página':'▭▭ Duas páginas'),
+      toggleFullscreen:this.toggleFullscreen, setRoot:this.setRoot,
+      chromeShown:!s.immersive, immersive:s.immersive,
+      showCenterNotice:isCenter && !s.turn,
+      centerNoticeTitle: flipped?'Fim do universo infantil!':'Aqui começa o universo infantil!',
+      centerNoticeText: flipped?'Para continuar lendo as reportagens dos adultos, vire a revista de volta.':'Desvire… quer dizer, VIRE a revista de cabeça para baixo e leia do outro lado, como na revista impressa.',
+      likeExcerpt:this.likeExcerpt, chipBtn, kchip1:kchip('#2fbf6a'), kchip2:kchip('#2f8bff'), kchip3:kchip('#ff8a34'),
+      opinionOpen:s.opinionOpen, opSent:s.opSent, opForm:!s.opSent, closeOpinion:this.closeOpinion,
+      opName:s.opName, opText:s.opText, onOpName:this.onOpName, onOpText:this.onOpText, sendOpinion:this.sendOpinion,
+      notesOpen:s.notesOpen, closeNotes:this.closeNotes, note:s.note, onNote:this.onNote, saveNote:this.saveNote, noteSaved:s.noteSaved,
+      drawOpen:s.drawOpen, drawSent:s.drawSent, drawForm:!s.drawSent, closeDraw:this.closeDraw,
+      pickPencil:this.pickPencil, pickEraser:this.pickEraser, toolPencil:toolBase(s.tool==='pencil'), toolEraser:toolBase(s.tool==='eraser'),
+      palette, clearCanvas:this.clearCanvas, sendDraw:this.sendDraw,
+      setCanvas:this.setCanvas, pDown:this.pDown, pMove:this.pMove, pUp:this.pUp,
+      lgpdOpen:!!s.lgpd, closeLgpd:this.closeLgpd, lgpdTitle:lg[0], lgpdBody:lg[1],
+      showPriv:this.showPriv, showTerms:this.showTerms, showConsent:this.showConsent,
+      lgpdTab1:lgpdTab(s.lgpd==='priv'), lgpdTab2:lgpdTab(s.lgpd==='terms'), lgpdTab3:lgpdTab(s.lgpd==='consent'),
+      toast:s.toast
+    };
+  }
+}
+</script>
+</body>
+</html>
